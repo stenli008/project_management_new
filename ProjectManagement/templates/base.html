@@ -20,15 +20,19 @@
     </a>
 
     <ul class="nav nav-pills">
-        <li class="nav-item"><a href="#" class="nav-link">Projects</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Schedule</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Staff</a></li>
+        {% if user.is_authenticated %}
+            <li class="nav-item"><a href="{% url 'accounts-logout-page' %}" class="nav-link">Logout</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Projects</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Schedule</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Staff</a></li>
+        {% endif %}
+
     </ul>
 </header>
 
-    {% block content %}
-    {% endblock %}
+{% block content %}
+{% endblock %}
 
 
 <footer class="py-3 my-4 mt-auto">
