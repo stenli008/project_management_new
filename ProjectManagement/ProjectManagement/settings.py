@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'ProjectManagement.accounts',
 
     'widget_tweaks',
+    'bootstrap_datepicker_plus',
 
 ]
 

@@ -11,13 +11,13 @@ class UserRegisterView(generic.CreateView):
     model = WorkerUser
     form_class = WorkerUserCreationForm
     template_name = 'accounts/accounts-register-page.html'
-    success_url = reverse_lazy('projects-landing-page-view')
+    success_url = reverse_lazy('projects-landing-page')
 
 
 class UserLoginView(auth_view.LoginView):
     form_class = WorkerUserLoginForm
     template_name = 'accounts/accounts-login-page.html'
-    next_page = reverse_lazy('projects-landing-page-view')
+    next_page = reverse_lazy('projects-landing-page')
 
 
 class UserLogoutView(auth_view.LogoutView):

@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from ProjectManagement.projects.models import LeaveApplication
+
+admin.site.register(LeaveApplication)
