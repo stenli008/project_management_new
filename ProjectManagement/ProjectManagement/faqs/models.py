@@ -2,7 +2,7 @@ from django.db import models
 
 from django.core.exceptions import ValidationError
 
-from ProjectManagement.accounts.models import WorkerUser
+
 
 
 class LeaveApplication(models.Model):
@@ -18,7 +18,7 @@ class LeaveApplication(models.Model):
         ('DECLINED', 'Declined'),
     )
 
-    worker = models.ForeignKey(WorkerUser, on_delete=models.SET_NULL, null=True)
+    worker = models.ForeignKey('accounts.WorkerUser', on_delete=models.SET_NULL, null=True)
     date = models.DateTimeField(auto_now_add=True)
     reason = models.TextField(max_length=300, blank=False, null=False)
     start_date = models.DateField(blank=False, null=False)
@@ -36,11 +36,11 @@ class LeaveApplication(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.worker.get_full_name()} requests {self.days_requested} days of leave'
+        return f'{self.worker.get_full_name()} requests {self.days_requested} days of {self.leave_type}'
 
 
 class OtherApplication(models.Model):
-    worker = models.ForeignKey(WorkerUser, on_delete=models.SET_NULL, null=True)
+    worker = models.ForeignKey('accounts.WorkerUser', on_delete=models.SET_NULL, null=True)
     request_type = models.CharField(max_length=30, blank=False, null=False)
     request_description = models.TextField(max_length=300, blank=False, null=False)
     date = models.DateField(auto_now_add=True)

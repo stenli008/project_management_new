@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p class="lead" style="margin-left: 74px;">This is a list of your leave days.</p>
+    <table class="table table-striped" style="margin: 10px auto;
+    max-width: 90%;">
+        <thead>
+        <tr>
+            <th scope="col">Leave Type</th>
+            <th scope="col">Days</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key, value in worker.get_sick_leave.items %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ value }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

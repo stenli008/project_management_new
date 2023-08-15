@@ -49,3 +49,12 @@ def other_requests_page_view(request):
     }
 
     return render(request, 'faqs/faqs-other-requests-page.html', context)
+
+
+@login_required
+def annual_statement_page_view(request):
+    worker = request.user
+    context = {
+        'worker': worker,
+    }
+    return render(request, 'faqs/faqs-annual-statement-page.html', context)

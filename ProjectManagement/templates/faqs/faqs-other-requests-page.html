@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% block content %}
     <form style="max-width: 330px; padding: 1rem; margin: auto;" method="post">
         {% csrf_token %}
-        {{ form }}
+        <div class="mb-3">
+            <label for="{{ form.request_description.id }}" class="form-label">Request Description</label>
+            {% render_field form.request_description class='form-control' %}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.request_type.id }}" class="form-label">Request type</label>
+            {% render_field form.request_type class='form-control' %}
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 {% endblock %}
