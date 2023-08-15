@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <form style="max-width: 330px; padding: 1rem; margin: auto;" method="post">
+        <h1 class="h3 mb-3 fw-normal">Leave Request</h1>
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.reason.id }}" class="form-label">Reason</label>
+            {% render_field form.reason class='form-control' %}
+        </div>
+        <div class="mb-3">
+            <label for="id_start_date" class="form-label">Start Date</label>
+            {% render_field form.start_date class='form-control' type='date' %}
+        </div>
+        <div class="mb-3">
+            <label for="id_end_date" class="form-label">End Date</label>
+            {% render_field form.end_date class='form-control' type='date' %}
+        </div>
+        <div class="mb-3">
+            <label for="id_leave_type" class="form-label">Leave Type</label>
+            {% render_field form.leave_type class='form-control' type='date' %}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

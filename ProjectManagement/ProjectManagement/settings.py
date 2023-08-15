@@ -26,6 +26,7 @@ INSTALLED_APPS = [
 
     'ProjectManagement.projects',
     'ProjectManagement.accounts',
+    'ProjectManagement.faqs',
 
     'widget_tweaks',
     'bootstrap_datepicker_plus',
