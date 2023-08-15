@@ -20,7 +20,7 @@ class LeaveApplication(models.Model):
 
     worker = models.ForeignKey(WorkerUser, on_delete=models.SET_NULL, null=True)
     date = models.DateTimeField(auto_now_add=True)
-    reason = models.TextField(max_length=300)
+    reason = models.TextField(max_length=300, blank=False, null=False)
     start_date = models.DateField(blank=False, null=False)
     end_date = models.DateField(blank=False, null=False)
     days_requested = models.PositiveIntegerField(blank=True, null=True)
@@ -37,3 +37,15 @@ class LeaveApplication(models.Model):
 
     def __str__(self):
         return f'{self.worker.get_full_name()} requests {self.days_requested} days of leave'
+
+
+class OtherApplication(models.Model):
+    worker = models.ForeignKey(WorkerUser, on_delete=models.SET_NULL, null=True)
+    request_type = models.CharField(max_length=30, blank=False, null=False)
+    request_description = models.TextField(max_length=300, blank=False, null=False)
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.worker.get_full_name()} requests {self.request_type}'
+
+
