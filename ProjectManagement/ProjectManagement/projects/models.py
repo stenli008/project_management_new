@@ -1,4 +1,4 @@
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
 
@@ -36,6 +36,7 @@ class Task(models.Model):
     date_added = models.DateField(auto_now_add=True)
     deadline = models.DateField(blank=False, null=False)
     complete = models.BooleanField(default=False)
+    progress = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     @property
     def days_left(self):
@@ -45,3 +46,9 @@ class Task(models.Model):
 
     def __str__(self):
         return f'{self.task_category.name} in project: {self.project.project_name}'
+
+    def save(self, *args, **kwargs):
+        if self.progress == 100:
+            self.complete = True
+
+        super().save(*args, **kwargs)
