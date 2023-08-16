@@ -1,5 +1,6 @@
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.utils import timezone
 
 from ProjectManagement.accounts.models import WorkerUser
 
@@ -32,6 +33,15 @@ class Task(models.Model):
         blank=False,
         null=False,
     )
+    date_added = models.DateField(auto_now_add=True)
+    deadline = models.DateField(blank=False, null=False)
+    complete = models.BooleanField(default=False)
+
+    @property
+    def days_left(self):
+        today = timezone.now().date()
+        days_left = (self.deadline - today).days
+        return max(0, days_left)
 
     def __str__(self):
         return f'{self.task_category.name} in project: {self.project.project_name}'

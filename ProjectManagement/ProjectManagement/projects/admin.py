@@ -7,6 +7,10 @@ class TaskCategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'unit']
 
 
+class TaskAdmin(admin.ModelAdmin):
+    list_display = ['project', 'task_category', 'quantity', 'days_left', 'deadline', 'complete']
+
+
 admin.site.register(TaskCategory, TaskCategoryAdmin)
 admin.site.register(Project)
-admin.site.register(Task)
+admin.site.register(Task, TaskAdmin)

@@ -10,7 +10,7 @@ class WorkerUser(AbstractUser):
     last_name = models.CharField(max_length=30, blank=False, null=False)
 
     @property
-    def get_sick_leave(self):
+    def get_leave(self):
         days = {
             'Unpaid': 0,
             'Paid': 0,
@@ -27,6 +27,11 @@ class WorkerUser(AbstractUser):
             else:
                 days['Sick'] += request.days_requested
         return days
+
+    @property
+    def get_leave_all(self):
+        leave_requests = LeaveApplication.objects.filter(worker=self)
+        return leave_requests
 
     @property
     def assigned_tasks(self):
