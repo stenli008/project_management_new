@@ -27,3 +27,7 @@ class WorkerUser(AbstractUser):
             else:
                 days['Sick'] += request.days_requested
         return days
+
+    @property
+    def assigned_tasks(self):
+        return self.tasks
