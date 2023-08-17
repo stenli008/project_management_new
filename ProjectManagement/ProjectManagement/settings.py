@@ -24,12 +24,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'widget_tweaks',
+    'bootstrap_datepicker_plus',
+    'rest_framework',
+
     'ProjectManagement.projects',
     'ProjectManagement.accounts',
     'ProjectManagement.faqs',
-
-    'widget_tweaks',
-    'bootstrap_datepicker_plus',
+    'ProjectManagement.apis'
 
 ]
 

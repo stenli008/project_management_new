@@ -7,9 +7,10 @@ class WorkerUserAdmin(admin.ModelAdmin):
     list_display = ('username', 'display_assigned_tasks')
 
     def display_assigned_tasks(self, obj):
-        return ', '.join([task.task_name for task in obj.assigned_tasks.all()])  # Custom method to display assigned tasks
+        assigned_task_categories = [str(task.task_category) for task in obj.assigned_tasks.all()]
+        return ', '.join(assigned_task_categories)
 
-    display_assigned_tasks.short_description = 'Assigned Tasks'  # Set the column header name
+    display_assigned_tasks.short_description = 'Assigned Tasks'
 
 
 admin.site.register(WorkerUser, WorkerUserAdmin)
