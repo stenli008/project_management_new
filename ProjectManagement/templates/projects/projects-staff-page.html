@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <p class="lead" style="margin-left: 74px;">This is a list of all the active and inactive members of staff</p>
+    <table class="table table-striped" style="margin: 10px auto;
+                max-width: 90%;">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col" style="width: 100px;">Status</th>
+            <th scope="col">Last Active</th>
+            <th scope="col"></th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for worker in workers %}
+            {% if not worker.is_staff %}
+                <tr>
+                    <td>{{ worker.get_full_name }}</td>
+                    <td>{{ worker.username }}</td>
+                    <td>{{ worker.email }}</td>
+                    <td style="max-width: 100px">
+                    <span id="status-{{ worker.pk }}">
+                        {% if worker.is_active %}
+                            Active
+                        {% else %}
+                            Inactive
+                        {% endif %}
+                            </span>
+                    </td>
+                    <td>{{ worker.last_login }}</td>
+                    <td>
+                        <button data-pk="{{ worker.pk }}" type="button"
+                                class="btn btn-warning toggle-worker-btn"
+                                style="width: 100px">
+                            {% if worker.is_active %}
+                                Deactivate
+                            {% else %}
+                                Activate
+                            {% endif %}
+                        </button>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    <script src="{% static 'js/toggleWorkerStatus.js' %}">
+    </script>
+{% endblock %}
