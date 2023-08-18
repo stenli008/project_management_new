@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
 
 from ProjectManagement.accounts.models import WorkerUser
+from ProjectManagement.projects.models import Project
 
 
 def is_superuser(user):
@@ -23,4 +24,17 @@ def projects_staff_page_view(request):
 
 @user_passes_test(is_superuser)
 def projects_projects_page_view(request):
-    return render(request, 'projects/projects-projects-page.html')
+    projects = Project.objects.all()
+    context = {
+        'projects': projects,
+    }
+    return render(request, 'projects/projects-projects-page.html', context)
+
+
+@user_passes_test(is_superuser)
+def projects_project_page_view(request, slug):
+    project = Project.objects.get(slug=slug)
+    context = {
+        'project': project,
+    }
+    return render(request, 'projects/projects-project-page.html', context)

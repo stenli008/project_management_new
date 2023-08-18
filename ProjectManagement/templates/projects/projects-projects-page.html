@@ -1,4 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
+    <p class="display-6" style="margin: 10px auto 20px auto;">Projects</p>
+    <table class="table table-striped" style="margin: 10px auto;
+                max-width: 90%;">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Client</th>
+            <th scope="col">Address</th>
+            <th scope="col"></th>
 
+        </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+            <tr>
+                <td>{{ project.project_name }}</td>
+                <td>{{ project.client }}
+                    {% if project.client.organisation %}
+                        - {{ project.client.organisation }}
+                    {% endif %}
+                </td>
+                <td>{{ project.address }}</td>
+                <td>
+                    <a class="btn btn-info" href="{% url 'projects-project-page' project.slug %}">
+                        Open Project
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-primary btn-lg" style="margin: 50px auto 10px auto;">Add New Project</button>
 {% endblock %}

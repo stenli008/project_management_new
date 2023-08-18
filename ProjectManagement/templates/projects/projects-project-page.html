@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p class="display-4" style="margin-left: auto;
+    margin-right: 182px;
+    margin-bottom: 30px;">
+        {{ project.project_name }}
+        <small class="text-body-secondary" style="font-size: 2rem;">On {{ project.address }}</small>
+    </p>
+    <table class="table table-striped" style="margin: 10px auto;
+                max-width: 90%;">
+        <thead>
+        <tr>
+            <th scope="col">Task</th>
+            <th scope="col">Requirements</th>
+            <th scope="col">Progress</th>
+            <th scope="col">Deadline</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in project.get_tasks %}
+            <tr>
+                <td>{{ task.task_category }}</td>
+                <td>{{ task.requirement }}
+                    {% if task.task_category.unit == 'METERS' %}
+                        m.
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="progress mb-3" role="progressbar" aria-label="Info example with label"
+                         aria-valuenow="{{ task.progress }}" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar text-bg-info"
+                             style="width: {{ task.progress }}%;">{{ task.progress }}%
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {{ task.deadline }}
+                </td>
+                <td>
+                    {% if task.complete %}
+                    Complete
+                    {% else %}
+                    Incomplete
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-info" href="{% url 'projects-project-page' project.slug %}">
+                        Manage Task
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
