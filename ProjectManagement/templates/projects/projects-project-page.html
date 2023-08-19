@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
     <p class="display-4" style="margin-left: auto;
     margin-right: 182px;
@@ -22,7 +23,7 @@
         </thead>
         <tbody>
         {% for task in project.get_tasks %}
-            <tr>
+            <tr class="task-tr" data-pk="{{ task.pk }}">
                 <td>{{ task.task_category }}</td>
                 <td>{{ task.requirement }}
                     {% if task.task_category.unit == 'METERS' %}
@@ -30,7 +31,8 @@
                     {% endif %}
                 </td>
                 <td>
-                    <div class="progress mb-3" role="progressbar" aria-label="Info example with label"
+                    <div style="height: 32px;" class="progress mb-3" role="progressbar"
+                         aria-label="Info example with label"
                          aria-valuenow="{{ task.progress }}" aria-valuemin="0" aria-valuemax="100">
                         <div class="progress-bar text-bg-info"
                              style="width: {{ task.progress }}%;">{{ task.progress }}%
@@ -42,18 +44,30 @@
                 </td>
                 <td>
                     {% if task.complete %}
-                    Complete
+                        Complete
                     {% else %}
-                    Incomplete
+                        Incomplete
                     {% endif %}
                 </td>
                 <td>
-                    <a class="btn btn-info" href="{% url 'projects-project-page' project.slug %}">
-                        Manage Task
-                    </a>
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        Action
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'projects-task-manage-page' task.slug %}">Manage</a>
+                        </li>
+                        <li>
+                            <button class="dropdown-item delete-task-btn" type="button" data-pk="{{ task.pk }}"
+                                    data-slug="{{ task.slug }}">Delete
+                            </button>
+                        </li>
+                    </ul>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    <script src="{% static 'js/deleteTaskBtn.js' %}">
+    </script>
 {% endblock %}

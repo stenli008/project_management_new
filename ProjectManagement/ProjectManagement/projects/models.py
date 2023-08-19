@@ -1,4 +1,4 @@
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
@@ -61,7 +61,7 @@ class Task(models.Model):
     deadline = models.DateField(blank=False, null=False)
     complete = models.BooleanField(default=False)
     work_done = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0)])
-    slug = models.SlugField(unique=False)
+    slug = models.SlugField(unique=False, blank=True)
 
     @property
     def days_left(self):
@@ -78,11 +78,8 @@ class Task(models.Model):
         return f'{self.task_category.name} in project: {self.project.project_name}'
 
     def save(self, *args, **kwargs):
-        value = f'{self.task_category}-{self.pk}'
-
+        value = f'{self.task_category}-{self.task_category}-{self.deadline}'
         if self.requirement == self.work_done:
             self.complete = True
-
         self.slug = slugify(value)
-
         super().save(*args, **kwargs)

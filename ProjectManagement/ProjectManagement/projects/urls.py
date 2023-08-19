@@ -9,4 +9,5 @@ urlpatterns = (
         path('', views.projects_projects_page_view, name='projects-projects-page'),
         path('<slug:slug>/', views.projects_project_page_view, name='projects-project-page'),
     ])),
+    path('manage-task/<slug:slug>', views.projects_task_manage_page_view, name='projects-task-manage-page'),
 )
