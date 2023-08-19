@@ -13,14 +13,19 @@ class Client(models.Model):
     phone_number = models.CharField(max_length=120, blank=True, null=False)
     email = models.EmailField(blank=True, null=False)
     address = models.CharField(max_length=120, blank=True, null=True)
+    full_name = models.CharField(max_length=120, blank=True)
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
+    def save(self, *args, **kwargs):
+        self.full_name = f'{self.first_name} {self.last_name}'
+        super().save(*args, **kwargs)
+
 
 class Project(models.Model):
     project_name = models.CharField(max_length=120, blank=False, null=False, unique=True)
-    address = models.CharField(max_length=120, blank=False, null=False)
+    address = models.CharField(max_length=120, blank=False, null=False, unique=True)
     client = models.ForeignKey(Client, on_delete=models.SET_NULL, blank=False, null=True)
     slug = models.SlugField(unique=True)
 
@@ -78,7 +83,7 @@ class Task(models.Model):
         return f'{self.task_category.name} in project: {self.project.project_name}'
 
     def save(self, *args, **kwargs):
-        value = f'{self.task_category}-{self.task_category}-{self.deadline}'
+        value = f'{self.task_category}-{self.requirement}-{self.project.project_name}'
         if self.requirement == self.work_done:
             self.complete = True
         self.slug = slugify(value)

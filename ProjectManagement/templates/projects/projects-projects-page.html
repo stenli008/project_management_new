@@ -31,5 +31,6 @@
         {% endfor %}
         </tbody>
     </table>
-    <button type="button" class="btn btn-primary btn-lg" style="margin: 50px auto 10px auto;">Add New Project</button>
+    <a class="btn btn-primary btn-lg" style="margin: 50px auto 10px auto;"
+       href="{% url 'projects-new-project-page' %}">Add New Project</a>
 {% endblock %}

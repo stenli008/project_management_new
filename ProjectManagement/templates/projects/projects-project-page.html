@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <p class="display-4" style="margin-left: auto;
-    margin-right: 182px;
-    margin-bottom: 30px;">
-        {{ project.project_name }}
-        <small class="text-body-secondary" style="font-size: 2rem;">On {{ project.address }}</small>
-    </p>
+    <div style="display: flex; margin-left: 4.8rem;">
+        <a class="display-6"
+           style="text-decoration: none; color: black; padding-right: 3.5rem;">
+            Client: <span class="nav-list">{{ project.client.full_name }}</span>
+        </a>
+        <p class="display-4" style="margin-left: auto;
+    padding-right: 75px;">
+
+            {{ project.project_name }}
+            <small class="text-body-secondary" style="font-size: 2rem;">On {{ project.address }}</small>
+        </p>
+    </div>
+
     <table class="table table-striped" style="margin: 10px auto;
                 max-width: 90%;">
         <thead>
@@ -68,6 +75,8 @@
         {% endfor %}
         </tbody>
     </table>
+    <a class="btn btn-primary btn-lg" style="margin: 50px auto 10px auto;"
+       href="{% url 'projects-new-task-page' project.slug%}">Add New Task</a>
     <script src="{% static 'js/deleteTaskBtn.js' %}">
     </script>
 {% endblock %}
