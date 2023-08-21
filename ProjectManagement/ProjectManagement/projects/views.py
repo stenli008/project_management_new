@@ -47,7 +47,7 @@ def projects_task_manage_page_view(request, slug):
     context = {
         'task': task,
     }
-    return render(request, 'projects/project-task-manage-page.html', context)
+    return render(request, 'projects/projects-task-manage-page.html', context)
 
 
 @user_passes_test(is_superuser)
@@ -85,3 +85,13 @@ def projects_new_task_page_view(request, slug):
         'current_project': current_project,
     }
     return render(request, 'projects/projects-new-task-page.html', context)
+
+
+def projects_worker_tasks_page_view(request, slug):
+    worker = WorkerUser.objects.get(slug=slug)
+    tasks = Task.objects.all().filter(workers=worker)
+    context = {
+        'worker': worker,
+        'tasks': tasks,
+    }
+    return render(request, 'projects/projects-worker-tasks-page.html', context)

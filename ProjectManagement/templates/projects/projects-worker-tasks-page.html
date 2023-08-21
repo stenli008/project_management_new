@@ -1,24 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <div style="display: flex; margin-left: 4.8rem;">
-        <a class="display-6"
-           style="text-decoration: none; color: black; padding-right: 3.5rem;">
-            Client: <span class="nav-list">{{ project.client.full_name }}</span>
-        </a>
-        <p class="display-4" style="margin-left: auto;
-    padding-right: 75px;">
-
-            {{ project.project_name }}
-            <small class="text-body-secondary" style="font-size: 2rem;">On {{ project.address }}</small>
-        </p>
-    </div>
-
+    <p class="display-5" style="margin: 0 auto 34px auto;">Assigned Tasks</p>
     <table class="table table-striped" style="margin: 10px auto;
-                max-width: 90%;">
+                max-width: 90%;table-layout: fixed">
         <thead>
         <tr>
             <th scope="col">Task</th>
+            <th scope="col">Project</th>
             <th scope="col">Requirements</th>
             <th scope="col">Progress</th>
             <th scope="col">Deadline</th>
@@ -29,9 +18,10 @@
         </tr>
         </thead>
         <tbody>
-        {% for task in project.get_tasks %}
+        {% for task in tasks %}
             <tr class="task-tr" data-pk="{{ task.pk }}" data-deadline="{{ task.deadline }}">
                 <td>{{ task.task_category }}</td>
+                <td>{{ task.project }}</td>
                 <td>{{ task.requirement }}
                     {% if task.task_category.unit == 'METERS' %}
                         m.
@@ -57,27 +47,18 @@
                     {% endif %}
                 </td>
                 <td>
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        Action
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'projects-task-manage-page' task.slug %}">Manage</a>
-                        </li>
-                        <li>
-                            <button class="dropdown-item delete-task-btn" type="button" data-pk="{{ task.pk }}"
-                                    data-slug="{{ task.slug }}">Delete
-                            </button>
-                        </li>
-                    </ul>
+                    <button class="btn btn-info track-progress-btn" data-pk="{{ task.pk }}">Track Progress</button>
+                    <label class="input-label" style="display: none">
+                        <input type='number' class="form-control work-input" style="height: 40px; width: 127px;">
+                    </label>
+                    <i data-done="{{ task.work_done }}" data-req="{{ task.requirement }}" data-pk="{{ task.pk }}"
+                       class="fa-solid fa-check check-btn" style="margin-left: 6px;display: none"></i>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-primary btn-lg" style="margin: 50px auto 10px auto;"
-       href="{% url 'projects-new-task-page' project.slug%}">Add New Task</a>
-    <script src="{% static 'js/deleteTaskBtn.js' %}">
-    </script>
     <script src="{% static 'js/taskColorChange.js' %}"></script>
+    <script src="{% static 'js/trackProgressBtn.js' %}"></script>
 {% endblock %}
+

@@ -20,3 +20,9 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = '__all__'
+
+
+class UpdateWorkDoneSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ['work_done']

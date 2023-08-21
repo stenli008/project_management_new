@@ -6,9 +6,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ElectroCo</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/b42ebc9abb.js" crossorigin="anonymous"></script>
+
 </head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -25,6 +28,8 @@
             <li class="nav-item"><a href="{% url 'accounts-logout-page' %}" class="nav-link">Logout</a></li>
             <li class="nav-item"><a href="#" class="nav-link">Schedule</a></li>
             <li class="nav-item"><a href="{% url 'faqs-page' %}" class="nav-link">FAQs</a></li>
+            <li class="nav-item"><a href="{% url 'projects-worker-tasks-page' user.slug %}" class="nav-link">My Tasks</a>
+            </li>
             {% if user.is_superuser %}
                 <li class="nav-item"><a href="{% url 'project-staff-page' %}" class="nav-link">Staff</a></li>
                 <li class="nav-item"><a href="{% url 'projects-projects-page' %}" class="nav-link">Projects</a></li>
@@ -44,6 +49,8 @@
         {% if user.is_authenticated %}
             <li class="nav-item"><a href="#" class="nav-link">Schedule</a></li>
             <li class="nav-item"><a href="{% url 'faqs-page' %}" class="nav-link">FAQs</a></li>
+            <li class="nav-item"><a href="{% url 'projects-worker-tasks-page' user.slug %}" class="nav-link">My Tasks</a>
+            </li>
             {% if user.is_superuser %}
                 <li class="nav-item"><a href="{% url 'projects-projects-page' %}" class="nav-link">Projects</a></li>
                 <li class="nav-item"><a href="{% url 'project-staff-page' %}" class="nav-link">Staff</a></li>

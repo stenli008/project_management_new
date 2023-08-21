@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.text import slugify
 
 from ProjectManagement.faqs.models import LeaveApplication
 
@@ -8,6 +9,7 @@ class WorkerUser(AbstractUser):
     email = models.EmailField(blank=False, null=False)
     first_name = models.CharField(max_length=30, blank=False, null=False)
     last_name = models.CharField(max_length=30, blank=False, null=False)
+    slug = models.SlugField(unique=False, blank=True)
 
     @property
     def get_leave(self):
@@ -33,6 +35,7 @@ class WorkerUser(AbstractUser):
         leave_requests = LeaveApplication.objects.filter(worker=self)
         return leave_requests
 
-    @property
-    def assigned_tasks(self):
-        return self.tasks
+    def save(self, *args, **kwargs):
+        slug_value = f'{self.first_name}-{self.last_name}'
+        self.slug = slugify(slug_value)
+        super(WorkerUser, self).save(*args, **kwargs)
