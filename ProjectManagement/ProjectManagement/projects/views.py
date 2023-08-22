@@ -44,8 +44,12 @@ def projects_project_page_view(request, slug):
 @user_passes_test(is_superuser)
 def projects_task_manage_page_view(request, slug):
     task = Task.objects.get(slug=slug)
+    workers = task.workers.all()
+    unused_workers = WorkerUser.objects.exclude(tasks=task)
     context = {
         'task': task,
+        'workers': workers,
+        'unused_workers': unused_workers,
     }
     return render(request, 'projects/projects-task-manage-page.html', context)
 

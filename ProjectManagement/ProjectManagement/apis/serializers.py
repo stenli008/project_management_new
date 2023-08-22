@@ -26,3 +26,9 @@ class UpdateWorkDoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ['work_done']
+
+
+class TaskWorkersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ['workers']

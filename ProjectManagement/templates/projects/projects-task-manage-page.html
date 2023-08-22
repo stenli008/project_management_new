@@ -1,4 +1,72 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+    <div style="display: flex; justify-content: space-evenly;">
+        <div class="card" style="width: 540px;">
+            <div class="card-body">
+                <h5 class="card-title">{{ task.project }}</h5>
+                <p class="card-text">{{ task.task_category }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    Requirements: {{ task.task_category.action }}
+                    {{ task.requirement }}{% if task.task_category.unit == 'METERS' %}m
+                        of{% endif %} {{ task.task_category.item }}
 
+                </li>
+                <li class="list-group-item">Added on: {{ task.date_added }}</li>
+                <li class="list-group-item">Deadline: {{ task.deadline }}</li>
+                <li class="list-group-item">Complete: {% if task.complete %}Yes{% else %}No{% endif %}</li>
+                <li class="list-group-item">Progress:
+                    <div style="height: 32px;" class="progress mb-3" role="progressbar"
+                         aria-label="Info example with label"
+                         aria-valuenow="{{ task.progress }}" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar text-bg-info"
+                             style="width: {{ task.progress }}%;">{{ task.work_done }}/{{ task.requirement }}
+                        </div>
+                    </div>
+                </li>
+                {% if task.description %}
+                    <li class="list-group-item">
+                        Description:
+                        <br>
+                        {{ task.description }}
+                    </li>
+                {% endif %}
+            </ul>
+            <div class="card-body" style="display: flex; justify-content: space-between;">
+                <a href="#" class="btn btn-warning">Edit Task</a>
+                <a href="#" class="btn btn-danger">Delete Task</a>
+            </div>
+        </div>
+        <div class="bd-example m-0 border-0" style="width: 526px;">
+            <ul class="list-group">
+                <li class="list-group-item"><p class="h5">Currently assigned employees:</p></li>
+                {% for worker in workers %}
+                    <li class="list-group-item"
+                        style="display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    height: 44px;">
+                        <p>{{ worker.get_full_name }}</p>
+                        <i class="fa-solid fa-xmark remove-worker-btn" style="padding-top: 6px;color: #dc3545;"
+                           data-worker="{{ worker.pk }}" data-task="{{ task.pk }}"></i>
+                    </li>
+
+                {% endfor %}
+                <li class="list-group-item" style="display: flex; justify-content: space-between">
+                    <label style="width: 29rem;">
+                        <select class="form-select">
+                            <option selected="">Add new worker</option>
+                            {% for unused_worker in unused_workers %}
+                                <option value="1">{{ unused_worker.get_full_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <i class="fa-solid fa-check" style="margin-top: 10px;color: #ffc107;"></i>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="{% static 'js/removeWorkerFromTask.js' %}"></script>
 {% endblock %}

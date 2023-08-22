@@ -27,7 +27,7 @@ class Project(models.Model):
     project_name = models.CharField(max_length=120, blank=False, null=False, unique=True)
     address = models.CharField(max_length=120, blank=False, null=False, unique=True)
     client = models.ForeignKey(Client, on_delete=models.SET_NULL, blank=False, null=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.project_name)
@@ -48,13 +48,24 @@ class TaskCategory(models.Model):
     )
     name = models.CharField(max_length=30, blank=False, null=False)
     unit = models.CharField(choices=CHOICES, max_length=100, blank=False, null=False)
+    action = models.CharField(max_length=30, blank=True)
+    item = models.CharField(max_length=30, blank=True)
+
+    def save(self, *args, **kwargs):
+        cur_name = self.name.split(' ')
+        cur_action = cur_name[0]
+        cur_item = cur_name[1]
+        self.action = cur_action
+        self.item = cur_item
+        super().save(*args, **kwargs)
+
 
     def __str__(self):
         return self.name
 
 
 class Task(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.SET_NULL, blank=False, null=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
     workers = models.ManyToManyField(WorkerUser, related_name='tasks')
     task_category = models.ForeignKey(TaskCategory, on_delete=models.SET_NULL, null=True, blank=False)
     requirement = models.IntegerField(
@@ -67,6 +78,7 @@ class Task(models.Model):
     complete = models.BooleanField(default=False)
     work_done = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0)])
     slug = models.SlugField(unique=False, blank=True)
+    description = models.TextField(max_length=300, blank=True)
 
     @property
     def days_left(self):

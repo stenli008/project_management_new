@@ -13,7 +13,7 @@ $(document).ready(function () {
                 url: apiEndPoint,
                 type: 'DELETE',
                 headers: {
-                    'X-CSRFToken': getCookie('csrftoken')
+
                 },
                 success: function (data) {
                     console.log(data);

@@ -39,3 +39,5 @@ class WorkerUser(AbstractUser):
         slug_value = f'{self.first_name}-{self.last_name}'
         self.slug = slugify(slug_value)
         super(WorkerUser, self).save(*args, **kwargs)
+
+
