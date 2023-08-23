@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
 
 from ProjectManagement.accounts.models import WorkerUser
-from ProjectManagement.projects.forms import CreateProjectForm, CreateTaskForm
+from ProjectManagement.projects.forms import CreateProjectForm, CreateTaskForm, EditTaskForm
 from ProjectManagement.projects.models import Project, Task, Client
 
 
@@ -99,3 +99,19 @@ def projects_worker_tasks_page_view(request, slug):
         'tasks': tasks,
     }
     return render(request, 'projects/projects-worker-tasks-page.html', context)
+
+
+def projects_edit_task_page_view(request, slug):
+    task = Task.objects.get(slug=slug)
+    if request.method == 'POST':
+        form = EditTaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect('projects-task-manage-page', slug=task.slug)
+    else:
+        form = EditTaskForm(instance=task)
+
+    context = {
+        'form': form
+    }
+    return render(request, 'projects/projects-edit-task-page.html', context)

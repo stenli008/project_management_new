@@ -1,29 +1,33 @@
-let baseUrlTask = 'http://127.0.0.1:8000/apis/task/'
-$(document).ready(function () {
-    $('.remove-worker-btn').click(function () {
-        let $removeBtn = $(this);
-        let worker = $removeBtn.data('worker');
-        let task = $removeBtn.data('task');
-        let apiEndpoint = `${baseUrlTask}${task}/worker/${worker}/`
-        let workerLi = $removeBtn.parent();
+$(document).ready(function (){
+    $('.add-worker-btn').click(function (){
+        let $addWorkerBtn = $(this);
+        let $liElement = $addWorkerBtn.closest('.list-group-item');
+        let $selectElement = $liElement.find('.form-select');
+        let selectedWorkerPk = $selectElement.find(':selected').data('unusedworker'); // Get the data-worker attribute of the selected option
+        let taskPk = $addWorkerBtn.data('task');
+        let $workerOption = $selectElement.find(':selected')
+
+
+        let apiEndpoint = `${baseUrlTask}${taskPk}/worker/${selectedWorkerPk}/`
 
         $.ajax({
             url: apiEndpoint,
-            type: 'DELETE',
+            type: 'PATCH',
             headers: {
                 'X-CSRFToken': getCookie('csrftoken')
             },
-            success: function (data) {
+            success: function (data){
                 console.log(data);
-                console.log('success');
-                workerLi.hide()
+                location.reload()
+
+
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
             },
         });
-    })
 
+    })
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -38,6 +42,4 @@ $(document).ready(function () {
         }
         return cookieValue;
     }
-
 })
-

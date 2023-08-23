@@ -14,4 +14,6 @@ urlpatterns = (
     path('manage-task/<slug:slug>', views.projects_task_manage_page_view, name='projects-task-manage-page'),
     path('create-project/', views.projects_new_project_page_view, name='projects-new-project-page'),
     path('worker-tasks/<slug:slug>', views.projects_worker_tasks_page_view, name='projects-worker-tasks-page'),
+    path('edit-task/<slug:slug>', views.projects_edit_task_page_view, name='projects-edit-task-page'),
+
 )

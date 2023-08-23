@@ -96,7 +96,7 @@ class Task(models.Model):
 
     def save(self, *args, **kwargs):
         value = f'{self.task_category}-{self.requirement}-{self.project.project_name}'
-        if self.requirement == self.work_done:
+        if self.requirement <= self.work_done:
             self.complete = True
         self.slug = slugify(value)
         super().save(*args, **kwargs)

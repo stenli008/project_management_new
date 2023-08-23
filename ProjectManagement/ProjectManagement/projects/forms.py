@@ -29,3 +29,14 @@ class CreateTaskForm(forms.ModelForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
 
+
+class EditTaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['project', 'task_category', 'requirement', 'work_done', 'deadline', 'description']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
