@@ -4,7 +4,8 @@
     <div style="display: flex; justify-content: space-evenly;">
         <div class="card" style="width: 540px;">
             <div class="card-body">
-                <h5 class="card-title">{{ task.project }}</h5>
+                <h5 class="card-title">
+                    <a href="{% url 'projects-project-page' task.project.slug %}">{{ task.project }}</a></h5>
                 <p class="card-text">{{ task.task_category }}</p>
             </div>
             <ul class="list-group list-group-flush">

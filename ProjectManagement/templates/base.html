@@ -11,6 +11,22 @@
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://kit.fontawesome.com/b42ebc9abb.js" crossorigin="anonymous"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+
+                initialView: 'dayGridMonth',
+                events: events,
+                eventDisplay: 'block',
+                aspectRatio: 2,
+            });
+            calendar.render();
+        });
+
+    </script>
 
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -26,7 +42,7 @@
     <ul class="nav nav-pills">
         {% if user.is_authenticated %}
             <li class="nav-item"><a href="{% url 'accounts-logout-page' %}" class="nav-link">Logout</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Schedule</a></li>
+            <li class="nav-item"><a href="{% url 'schedule' %}" class="nav-link">Schedule</a></li>
             <li class="nav-item"><a href="{% url 'faqs-page' %}" class="nav-link">FAQs</a></li>
             <li class="nav-item"><a href="{% url 'projects-worker-tasks-page' user.slug %}" class="nav-link">My Tasks</a>
             </li>
@@ -47,7 +63,7 @@
 
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
         {% if user.is_authenticated %}
-            <li class="nav-item"><a href="#" class="nav-link">Schedule</a></li>
+            <li class="nav-item"><a href="{% url 'schedule' %}" class="nav-link">Schedule</a></li>
             <li class="nav-item"><a href="{% url 'faqs-page' %}" class="nav-link">FAQs</a></li>
             <li class="nav-item"><a href="{% url 'projects-worker-tasks-page' user.slug %}" class="nav-link">My Tasks</a>
             </li>

@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from rest_framework import status, viewsets
 from rest_framework.generics import DestroyAPIView
 from rest_framework.response import Response
@@ -11,7 +12,7 @@ from ProjectManagement.projects.models import Task
 
 
 class ListWorkerUsersView(APIView):
-    # permission_classes = [IsSuperuser]
+    permission_classes = [IsSuperuser]
 
     def get(self, request):
         workers = WorkerUser.objects.all()
@@ -20,7 +21,7 @@ class ListWorkerUsersView(APIView):
 
 
 class UpdateWorkerUserStatus(APIView):
-    # permission_classes = [IsSuperuser]
+    permission_classes = [IsSuperuser]
 
     def post(self, request, pk):
         try:
@@ -36,11 +37,14 @@ class UpdateWorkerUserStatus(APIView):
 
 
 class DeleteTaskView(DestroyAPIView):
+    permission_classes = [IsSuperuser]
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
 
 class TaskAPIView(APIView):
+    permission_classes = [IsSuperuser]
+
     def get(self, request):
         tasks = Task.objects.all()
         serializer = TaskSerializer(tasks, many=True)
@@ -52,6 +56,7 @@ class TaskAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class UpdateWorkDoneView(APIView):
@@ -83,6 +88,7 @@ class UpdateWorkDoneView(APIView):
 
 
 class UpdateWorkerFromTask(APIView):
+    permission_classes = [IsSuperuser]
 
     def delete(self, request, task_pk, worker_pk):
         try:
