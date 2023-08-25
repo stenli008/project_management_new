@@ -12,7 +12,7 @@ from ProjectManagement.projects.models import Task
 
 
 class ListWorkerUsersView(APIView):
-    permission_classes = [IsSuperuser]
+
 
     def get(self, request):
         workers = WorkerUser.objects.all()
@@ -21,7 +21,7 @@ class ListWorkerUsersView(APIView):
 
 
 class UpdateWorkerUserStatus(APIView):
-    permission_classes = [IsSuperuser]
+
 
     def post(self, request, pk):
         try:
@@ -37,13 +37,12 @@ class UpdateWorkerUserStatus(APIView):
 
 
 class DeleteTaskView(DestroyAPIView):
-    permission_classes = [IsSuperuser]
+
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
 
 class TaskAPIView(APIView):
-    permission_classes = [IsSuperuser]
 
     def get(self, request):
         tasks = Task.objects.all()
@@ -88,7 +87,7 @@ class UpdateWorkDoneView(APIView):
 
 
 class UpdateWorkerFromTask(APIView):
-    permission_classes = [IsSuperuser]
+
 
     def delete(self, request, task_pk, worker_pk):
         try:
