@@ -7,12 +7,10 @@ from rest_framework.views import APIView
 from ProjectManagement.accounts.models import WorkerUser
 from ProjectManagement.apis.serializers import WorkerUserSerializer, WorkerUserStatusSerializer, TaskSerializer, \
     UpdateWorkDoneSerializer, TaskWorkersSerializer
-from ProjectManagement.apis.permissions import IsSuperuser
 from ProjectManagement.projects.models import Task
 
 
 class ListWorkerUsersView(APIView):
-
 
     def get(self, request):
         workers = WorkerUser.objects.all()
@@ -21,7 +19,6 @@ class ListWorkerUsersView(APIView):
 
 
 class UpdateWorkerUserStatus(APIView):
-
 
     def post(self, request, pk):
         try:
@@ -37,7 +34,6 @@ class UpdateWorkerUserStatus(APIView):
 
 
 class DeleteTaskView(DestroyAPIView):
-
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
@@ -55,7 +51,6 @@ class TaskAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class UpdateWorkDoneView(APIView):
@@ -87,8 +82,6 @@ class UpdateWorkDoneView(APIView):
 
 
 class UpdateWorkerFromTask(APIView):
-
-
     def delete(self, request, task_pk, worker_pk):
         try:
             task = Task.objects.get(pk=task_pk)

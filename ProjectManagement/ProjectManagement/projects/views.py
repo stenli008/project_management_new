@@ -15,7 +15,6 @@ def projects_landing_page_view(request):
     return render(request, 'projects/projects-landing-page.html')
 
 
-@user_passes_test(is_superuser)
 def projects_staff_page_view(request):
     workers = WorkerUser.objects.all()
     context = {
@@ -24,7 +23,6 @@ def projects_staff_page_view(request):
     return render(request, 'projects/projects-staff-page.html', context)
 
 
-@user_passes_test(is_superuser)
 def projects_projects_page_view(request):
     projects = Project.objects.all()
     context = {
@@ -33,7 +31,6 @@ def projects_projects_page_view(request):
     return render(request, 'projects/projects-projects-page.html', context)
 
 
-@user_passes_test(is_superuser)
 def projects_project_page_view(request, slug):
     project = Project.objects.get(slug=slug)
     context = {
@@ -42,7 +39,6 @@ def projects_project_page_view(request, slug):
     return render(request, 'projects/projects-project-page.html', context)
 
 
-@user_passes_test(is_superuser)
 def projects_task_manage_page_view(request, slug):
     task = Task.objects.get(slug=slug)
     workers = task.workers.all()
@@ -55,7 +51,6 @@ def projects_task_manage_page_view(request, slug):
     return render(request, 'projects/projects-task-manage-page.html', context)
 
 
-@user_passes_test(is_superuser)
 def projects_new_project_page_view(request):
     clients = Client.objects.all()
     if request.method == 'POST':
@@ -104,7 +99,6 @@ def projects_worker_tasks_page_view(request, slug):
     return render(request, 'projects/projects-worker-tasks-page.html', context)
 
 
-@user_passes_test(is_superuser)
 def projects_edit_task_page_view(request, slug):
     task = Task.objects.get(slug=slug)
     if request.method == 'POST':
