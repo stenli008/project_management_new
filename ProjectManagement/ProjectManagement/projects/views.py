@@ -10,6 +10,7 @@ from ProjectManagement.projects.models import Project, Task, Client
 def is_superuser(user):
     return user.is_superuser
 
+
 def projects_landing_page_view(request):
     return render(request, 'projects/projects-landing-page.html')
 
